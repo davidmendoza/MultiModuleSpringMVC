@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
 import multiModuleSpringMVC.core.service.StudentService;
 
@@ -32,20 +34,21 @@ public class AppController {
 	
 	@RequestMapping(value="/student/add")
 	public String viewAddPage(Model model) {
-		model.addAttribute("student", new Student());
+		model.addAttribute("student", new StudentDTO());
 		return "addStudent";
 	}
 	
 	@RequestMapping(value="/student/process", method=RequestMethod.POST)
-	public String addOrEditStudent(@Valid Student student, BindingResult result, Model model) {
+	public String addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, Model model) {
 	    if (result.hasErrors()) {
 	        model.addAttribute("message", "Errors encountered. Please fill up the form again.");
 		} else {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
-				model.addAttribute("student", new Student());
+				model.addAttribute("student", new StudentDTO());
 		        model.addAttribute("message", "New Student Added");
 			} else {
+				System.out.println("Error is BELOW!!!!!!!!");
 				studentService.updateStudent(student);
 		        model.addAttribute("message", "Updated Student Details");
 			}
@@ -61,11 +64,11 @@ public class AppController {
 	
 	@RequestMapping(value="/student/edit/{studentId}")
 	public String viewEditPage(@PathVariable("studentId")int id, Model model) {
-		Student student = studentService.getStudent(id);
+		StudentDTO student = studentService.getStudent(id);
 		if (student != null) {
 		    model.addAttribute("student", student);
 		} else {
-			model.addAttribute("student", new Student());
+			model.addAttribute("student", new StudentDTO());
 		}
 		return "addStudent";
 	}

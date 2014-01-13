@@ -1,58 +1,37 @@
-package multiModuleSpringMVC.core.model;
+package multiModuleSpringMVC.core.dto;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Type;
+import multiModuleSpringMVC.core.model.Gender;
+import multiModuleSpringMVC.core.model.Grades;
 
 
-@Entity
-@Table(name="STUDENT")
-public class Student {
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID", unique=true, nullable=false)
+public class StudentDTO {
+
     private int id;
-	//validations should be in DTO 
+    
 	@Size(min=2, max=30, message="First name must be between 2-30 characters only")
 	@NotNull
-	@Column(name="FIRST_NAME")
     private String firstName;
 	
 	@Size(min=2, max=30, message="First name must be between 2-30 characters only")
 	@NotNull
-	@Column(name="LAST_NAME")
     private String lastName;
 	
 	@NotNull @Min(value = 1, message="Please choose year level")
-	@Column(name="YEAR_LEVEL")
     private int level;
 	
-	@OneToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="GRADES_ID")
 	private Grades grade;
 	
-	@Column(name="STATUS")
-	@Type(type="yes_no")
+	@NotNull(message="Please choose the Student's status")
 	private Boolean status;
 	
-	@Column(name="GENDER")
-	@Enumerated(EnumType.STRING)
+	@NotNull(message="Please enter Student's gender")
 	private Gender gender;
 	
-	public Student() {
+	public StudentDTO() {
 		
 	}
 	

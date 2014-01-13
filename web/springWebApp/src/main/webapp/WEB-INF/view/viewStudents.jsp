@@ -15,7 +15,9 @@
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Gender</th>
             <th>Year Level</th>
+            <th>Active?</th>
             <th>Action</th>
         </tr>
         <c:forEach items="${students}" var="student">
@@ -23,7 +25,9 @@
             <td>${student.id}</td>
             <td>${student.firstName}</td>
             <td>${student.lastName}</td>
+            <td>${student.gender}</td>
             <td>${student.level}</td>
+            <td>${student.status}</td>
             <td><a href="${contextPath}/student/edit/${student.id}">Update | </a>
             <a href="${contextPath}/student/delete/${student.id}">Delete</a></td>
         </tr>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import multiModuleSpringMVC.core.dao.StudentDao;
+import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
 import multiModuleSpringMVC.core.model.Grades;
 
@@ -17,18 +18,28 @@ public class StudentServiceImpl implements StudentService {
 	private StudentDao studentDao;
     
 	@Transactional
-	public void addStudent(Student student) {
+	public void addStudent(StudentDTO studentDto) {
+		Student student = new Student();
+		student = transferDtoToStudent(student, studentDto);
 		studentDao.addStudent(student);
 	}
-
+	
 	@Transactional
 	public List<Student> getStudentList() {
 		return studentDao.getStudentList();
 	}
-
+	
 	@Transactional
-	public Student getStudent(int id) {
-		return studentDao.getStudent(id);
+	public StudentDTO getStudent(int id) {
+		Student student = studentDao.getStudent(id);
+		StudentDTO studentDto = new StudentDTO();
+		studentDto.setId(student.getId());
+		studentDto.setFirstName(student.getFirstName());
+		studentDto.setLastName(student.getLastName());
+		studentDto.setGender(student.getGender());
+		studentDto.setLevel(student.getLevel());
+		studentDto.setStatus(student.getStatus());
+		return studentDto;
 	}
 
 	@Transactional
@@ -43,11 +54,10 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Transactional
-	public void updateStudent(Student student) {
-		Student updateStudent = studentDao.getStudent(student.getId());
-		updateStudent.setFirstName(student.getFirstName());
-		updateStudent.setLastName(student.getLastName());
-		updateStudent.setLevel(student.getLevel());
+	public void updateStudent(StudentDTO studentDto) {
+		Student updateStudent = studentDao.getStudent(studentDto.getId());
+		updateStudent = transferDtoToStudent(updateStudent, studentDto);
+		updateStudent.setFirstName(studentDto.getFirstName());
 		studentDao.updateStudent(updateStudent);
 	}
 	
@@ -70,6 +80,15 @@ public class StudentServiceImpl implements StudentService {
     	
 	    studentDao.updateStudent(updateStudent);
 	}
+    
+    private static Student transferDtoToStudent(Student student, StudentDTO studentDto) {
+    	student.setFirstName(studentDto.getFirstName());
+		student.setLastName(studentDto.getLastName());
+		student.setLevel(studentDto.getLevel());
+		student.setStatus(studentDto.getStatus());
+		student.setGender(studentDto.getGender());
+		return student;
+    }
 	
 	
 }
