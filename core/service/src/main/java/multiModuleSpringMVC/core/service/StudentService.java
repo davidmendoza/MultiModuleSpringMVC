@@ -16,6 +16,4 @@ public interface StudentService {
 	public int deleteStudent(int id);
 	
 	public void updateStudent(StudentDTO student);
-	
-	public void saveGrades(Student student);
 }

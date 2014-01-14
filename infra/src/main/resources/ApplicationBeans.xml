@@ -12,9 +12,13 @@
  http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
  
   <context:annotation-config/>
-  <bean class="multiModuleSpringMVC.web.controller.AppController"/>
+  <bean class="multiModuleSpringMVC.web.controller.StudentController"/>
+  <bean class="multiModuleSpringMVC.web.controller.IndexController"/>
+  <bean class="multiModuleSpringMVC.web.controller.SubjectController"/>
   <bean class="multiModuleSpringMVC.core.dao.StudentDaoImpl"/>
   <bean class="multiModuleSpringMVC.core.service.StudentServiceImpl"/>
+  <bean class="multiModuleSpringMVC.core.dao.SubjectDaoImpl"/>
+  <bean class="multiModuleSpringMVC.core.service.SubjectServiceImpl"/>
   
   <!-- For javax.validation annotations  -->
   <mvc:annotation-driven />

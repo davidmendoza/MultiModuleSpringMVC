@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="SUBJECT")
@@ -17,9 +20,12 @@ public class Subject {
 	@Column(name="ID", unique=true, nullable=false)
     private int id;
 	
+	@NotNull
 	@Column(name="NAME")
 	private String name;
 	
+	@NotNull
+	@Min(value=65) @Max(value=99)
 	@Column(name="GRADE")
 	private int grade;
 	

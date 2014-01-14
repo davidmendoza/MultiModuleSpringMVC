@@ -1,11 +1,13 @@
 package multiModuleSpringMVC.core.dto;
 
+import java.util.Set;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import multiModuleSpringMVC.core.model.Gender;
-import multiModuleSpringMVC.core.model.Grades;
+import multiModuleSpringMVC.core.model.Subject;
 
 
 public class StudentDTO {
@@ -23,13 +25,13 @@ public class StudentDTO {
 	@NotNull @Min(value = 1, message="Please choose year level")
     private int level;
 	
-	private Grades grade;
-	
 	@NotNull(message="Please choose the Student's status")
 	private Boolean status;
 	
 	@NotNull(message="Please enter Student's gender")
 	private Gender gender;
+	
+	private Set<Subject> subjects;
 	
 	public StudentDTO() {
 		
@@ -67,14 +69,6 @@ public class StudentDTO {
 		this.level = level;
 	}
 
-	public Grades getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Grades grade) {
-		this.grade = grade;
-	}
-
 	public Gender getGender() {
 		return gender;
 	}
@@ -90,5 +84,14 @@ public class StudentDTO {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
 
 }

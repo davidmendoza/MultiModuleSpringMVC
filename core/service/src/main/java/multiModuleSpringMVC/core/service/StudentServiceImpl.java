@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import multiModuleSpringMVC.core.dao.StudentDao;
 import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
-import multiModuleSpringMVC.core.model.Grades;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -56,27 +55,8 @@ public class StudentServiceImpl implements StudentService {
 		updateStudent.setFirstName(studentDto.getFirstName());
 		studentDao.updateStudent(updateStudent);
 	}
-	
-    @Transactional
-	public void saveGrades(Student student) {
-    	Student updateStudent = studentDao.getStudent(student.getId());
-    	Grades grade = updateStudent.getGrade();
-    	if (grade == null) {
-			Grades newGrade = new Grades();
-			newGrade.setMath(student.getGrade().getMath());
-			newGrade.setScience(student.getGrade().getScience());
-			newGrade.setEnglish(student.getGrade().getEnglish());
-			updateStudent.setGrade(newGrade);
-		} else {
-			grade.setMath(student.getGrade().getMath());
-			grade.setEnglish(student.getGrade().getEnglish());
-			grade.setScience(student.getGrade().getScience());
-			updateStudent.setGrade(grade);
-		}
-	    studentDao.updateStudent(updateStudent);
-	}
     
-    private static Student transferDtoToStudent(Student student, StudentDTO studentDto) {
+    private Student transferDtoToStudent(Student student, StudentDTO studentDto) {
     	student.setFirstName(studentDto.getFirstName());
 		student.setLastName(studentDto.getLastName());
 		student.setLevel(studentDto.getLevel());
@@ -85,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
 		return student;
     }
     
-    private static StudentDTO transferStudentToDto(Student student, StudentDTO studentDto) {
+    private StudentDTO transferStudentToDto(Student student, StudentDTO studentDto) {
         studentDto.setId(student.getId());
 	    studentDto.setFirstName(student.getFirstName());
 	    studentDto.setLastName(student.getLastName());

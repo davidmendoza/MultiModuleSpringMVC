@@ -17,54 +17,47 @@ import multiModuleSpringMVC.core.model.Student;
 import multiModuleSpringMVC.core.service.StudentService;
 
 @Controller
-public class AppController {
+@RequestMapping(value="/student")
+public class StudentController {
     
 	@Autowired
 	private StudentService studentService;
 	
-	@RequestMapping(value="/")
-	public ModelAndView mainPage() {
-		return new ModelAndView("index");
-	}
-	
-	@RequestMapping(value="/index")
-	public ModelAndView indexPage() {
-		return new ModelAndView("index");
-	}
-	
-	@RequestMapping(value="/student/add")
+	@RequestMapping(value="/add")
 	public String viewAddPage(Model model) {
 		model.addAttribute("student", new StudentDTO());
 		return "addStudent";
 	}
 	
-	@RequestMapping(value="/student/process", method=RequestMethod.POST)
+	@RequestMapping(value="/process", method=RequestMethod.POST)
 	public ModelAndView addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result) {
 	    ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
 	        mav.addObject("message", "Errors encountered. Please fill up the form again.");
+	        mav.setViewName("addStudent");
+	        mav.addObject("student", student);
 		} else {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
 		        mav.addObject("message", "New Student Added");
-		        mav.addObject("student",new StudentDTO());
 			} else {
 				studentService.updateStudent(student);
 		        mav.addObject("message", "Updated Student Details");
-		        mav.addObject("student", student);
 			}
+		    mav.setViewName("viewStudents");
+			mav.addObject("students", studentService.getStudentList());
 		}
-		mav.setViewName("addStudent");
+		
 		return mav;
 	}
 	
-	@RequestMapping(value="/student/view")
+	@RequestMapping(value="/view")
 	public String viewStudents(Model model) {
 		model.addAttribute("students", studentService.getStudentList());
 		return "viewStudents";
 	}
 	
-	@RequestMapping(value="/student/edit/{studentId}")
+	@RequestMapping(value="/edit/{studentId}")
 	public String viewEditPage(@PathVariable("studentId")int id, Model model) {
 		StudentDTO student = studentService.getStudent(id);
 		if (student != null) {
@@ -75,7 +68,7 @@ public class AppController {
 		return "addStudent";
 	}
 	
-	@RequestMapping(value="/student/delete/{studentId}")
+	@RequestMapping(value="/delete/{studentId}")
 	public String deleteStudent(@PathVariable("studentId")int id, Model model) {
 		int isStudentDeleted = studentService.deleteStudent(id);
 		if (isStudentDeleted == 1) {
@@ -85,29 +78,5 @@ public class AppController {
 		}
 		return viewStudents(model);
 	}
-	
-	@RequestMapping(value="/student/grades")
-	public String viewGrades(Model model) {
-	    model.addAttribute("students", studentService.getStudentList());
-	    model.addAttribute("student", new Student());
-	    return "viewGrades";
-	}
-	
-	@RequestMapping(value="/student/grades/process", method=RequestMethod.POST)
-	public String saveGrades(Student student, BindingResult result, Model model) {
-		
-		if (result.hasErrors()){
-			model.addAttribute("students", studentService.getStudentList());
-		    model.addAttribute("student", new Student());
-			model.addAttribute("message","Please enter a valid grade");
-			return "viewGrades";
-		} 
-		
-		studentService.saveGrades(student);
-		model.addAttribute("message", "Saved Grades!");
-		return "index";
-		//use ModelAndView object as return type
-	}
-	
 	
 }
