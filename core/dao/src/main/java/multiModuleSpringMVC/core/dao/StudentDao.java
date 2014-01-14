@@ -12,7 +12,7 @@ public interface StudentDao {
 	
 	public Student getStudent(int id);
 	
-	public void deleteStudent(Student student);
+	public int deleteStudent(int id);
 	
 	public void updateStudent(Student student);
 	

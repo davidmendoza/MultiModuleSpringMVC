@@ -1,5 +1,7 @@
 package multiModuleSpringMVC.core.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -43,6 +46,9 @@ public class Student {
 	@OneToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="GRADES_ID")
 	private Grades grade;
+	
+	@OneToMany(mappedBy="student")
+	private Set<Subject> subjects;
 	
 	@Column(name="STATUS")
 	@Type(type="yes_no")
@@ -111,5 +117,15 @@ public class Student {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects = subjects;
+	}
+	
+	
 
 }

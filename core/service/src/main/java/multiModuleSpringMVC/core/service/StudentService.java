@@ -9,11 +9,11 @@ public interface StudentService {
 
     public void addStudent(StudentDTO student);
 	
-	public List<Student> getStudentList();
+	public List<StudentDTO> getStudentList();
 	
 	public StudentDTO getStudent(int id);
 	
-	public boolean deleteStudent(int id);
+	public int deleteStudent(int id);
 	
 	public void updateStudent(StudentDTO student);
 	

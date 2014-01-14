@@ -29,9 +29,16 @@
 	    Gender: <input type="radio" name="gender" value="Male" ${student.gender == 'Male' ? 'checked' : '' }>Male
 	    		<input type="radio" name="gender" value="Female" ${student.gender == 'Female' ? 'checked' : '' }>Female 
 	    		<form:errors path="gender"/><br/>
+	   	<c:choose>
+	   	    <c:when test="${student.status != null}">
 	    Status: <input type="radio" name="status" value="true" ${student.status == 'true' ? 'checked' : '' }>Active
 	       	    <input type="radio" name="status" value="false" ${student.status == 'false' ? 'checked' : '' }>Inactive
 	       	    <form:errors path="status"/><br/>
+	       	</c:when>
+	       	<c:otherwise>
+	       	    <input type="hidden" name="status" value="true"/>
+	       	</c:otherwise>
+	    </c:choose>
 	    <input type="submit" value="Save Student"/>
 	</form:form>
     <a href="${contextPath}/index">Back</a><br/>

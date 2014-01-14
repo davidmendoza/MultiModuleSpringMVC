@@ -39,21 +39,23 @@ public class AppController {
 	}
 	
 	@RequestMapping(value="/student/process", method=RequestMethod.POST)
-	public String addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, Model model) {
-	    if (result.hasErrors()) {
-	        model.addAttribute("message", "Errors encountered. Please fill up the form again.");
+	public ModelAndView addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result) {
+	    ModelAndView mav = new ModelAndView();
+		if (result.hasErrors()) {
+	        mav.addObject("message", "Errors encountered. Please fill up the form again.");
 		} else {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
-				model.addAttribute("student", new StudentDTO());
-		        model.addAttribute("message", "New Student Added");
+		        mav.addObject("message", "New Student Added");
+		        mav.addObject("student",new StudentDTO());
 			} else {
-				System.out.println("Error is BELOW!!!!!!!!");
 				studentService.updateStudent(student);
-		        model.addAttribute("message", "Updated Student Details");
+		        mav.addObject("message", "Updated Student Details");
+		        mav.addObject("student", student);
 			}
 		}
-		return "addStudent";
+		mav.setViewName("addStudent");
+		return mav;
 	}
 	
 	@RequestMapping(value="/student/view")
@@ -75,15 +77,13 @@ public class AppController {
 	
 	@RequestMapping(value="/student/delete/{studentId}")
 	public String deleteStudent(@PathVariable("studentId")int id, Model model) {
-		Boolean isStudentDeleted = studentService.deleteStudent(id);
-		if (isStudentDeleted == true) {
+		int isStudentDeleted = studentService.deleteStudent(id);
+		if (isStudentDeleted == 1) {
 		    model.addAttribute("message", "Deleted Student");
-		    model.addAttribute("students", studentService.getStudentList());
 		} else {
 		    model.addAttribute("message", "Student does not exist");
-		    model.addAttribute("students", studentService.getStudentList());
 		}
-		return "viewStudents";
+		return viewStudents(model);
 	}
 	
 	@RequestMapping(value="/student/grades")
