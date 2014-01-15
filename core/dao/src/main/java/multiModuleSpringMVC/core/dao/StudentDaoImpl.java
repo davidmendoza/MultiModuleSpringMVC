@@ -1,6 +1,5 @@
 package multiModuleSpringMVC.core.dao;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.model.Student;
 
 @Repository

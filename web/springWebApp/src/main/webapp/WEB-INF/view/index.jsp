@@ -13,7 +13,7 @@
 <body>
 	<h3>Student Profile Application using Spring MVC</h3>
 	<a href="${contextPath}/student/add">Add New Student</a><br/>
-	<a href="${contextPath}/student/view">View Students</a><br/>
+	<a href="${contextPath}/student/view?page=start">View Students</a><br/>
 	<a href="${contextPath}/student/passed">View Active Passing Students</a>
 	<b>${message}</b>
 </body>

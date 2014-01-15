@@ -1,10 +1,12 @@
 package multiModuleSpringMVC.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import multiModuleSpringMVC.core.dto.PassingStudents;
@@ -55,8 +58,18 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/view")
-	public String viewStudents(Model model) {
-		model.addAttribute("students", studentService.getStudentList());
+	public String viewStudents(@RequestParam(value="page")String page, Model model) {
+		PagedListHolder<StudentDTO> pageListHolder = new PagedListHolder<StudentDTO>(studentService.getStudentList());
+		pageListHolder.setPageSize(5);
+		if (page.equals("next")) {
+			pageListHolder.nextPage();
+		} else if (page.equals("previous")) {
+			pageListHolder.previousPage();
+		} else if (page.equals("last")) {
+			pageListHolder.getLastLinkedPage();
+		}
+		List<StudentDTO> studentList = pageListHolder.getPageList();
+	    model.addAttribute("students", studentList);
 		return "viewStudents";
 	}
 	
@@ -79,7 +92,7 @@ public class StudentController {
 		} else {
 		    model.addAttribute("message", "Student does not exist");
 		}
-		return viewStudents(model);
+		return viewStudents("start", model);
 	}
 	
 	@RequestMapping(value="/passed")
