@@ -1,5 +1,7 @@
 package multiModuleSpringMVC.core.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -8,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.model.Student;
 
 @Repository
@@ -40,6 +43,16 @@ public class StudentDaoImpl implements StudentDao {
 		Query query = session.createQuery("delete from Student where id = :id");
 		query.setInteger("id", id);
 		return query.executeUpdate();
+	}
+
+	public Iterator<Object[]> getPassingStudents() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		String hql = ("SELECT st.id, st.firstName, st.lastName, st.level, AVG(subj.grade) FROM Student st JOIN "
+				+ "st.subjects subj WHERE st.status = 'Y' GROUP BY st.id HAVING AVG(subj.grade) >= 75"
+				+ " ORDER BY st.level asc, AVG(subj.grade) desc");
+		Iterator<Object[]> iterator = session.createQuery(hql).list().iterator();
+		return iterator;
 	}
 	
 }

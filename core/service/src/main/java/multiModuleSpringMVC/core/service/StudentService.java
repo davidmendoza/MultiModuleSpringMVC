@@ -2,6 +2,7 @@ package multiModuleSpringMVC.core.service;
 
 import java.util.List;
 
+import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
 
@@ -16,4 +17,6 @@ public interface StudentService {
 	public int deleteStudent(int id);
 	
 	public void updateStudent(StudentDTO student);
+	
+	public List<PassingStudents> getPassingStudents();
 }

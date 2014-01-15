@@ -30,6 +30,7 @@ public class SubjectController {
     public ModelAndView openSubjectPage(@PathVariable("studentId")int id, ModelAndView mav) {
     	mav.addObject("student", studentService.getStudent(id));
     	mav.addObject("subjects", subjService.getSubjectList(id));
+    	mav.addObject("gpa", subjService.getGPA(id));
     	mav.addObject("subject", new Subject());
     	mav.setViewName("manageSubjects");
     	return mav;

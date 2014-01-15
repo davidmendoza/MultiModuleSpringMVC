@@ -1,6 +1,7 @@
 package multiModuleSpringMVC.core.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import multiModuleSpringMVC.core.dao.StudentDao;
+import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
 
@@ -56,6 +58,23 @@ public class StudentServiceImpl implements StudentService {
 		studentDao.updateStudent(updateStudent);
 	}
     
+	@Transactional
+	public List<PassingStudents> getPassingStudents() {
+		Iterator<Object[]> iterator = studentDao.getPassingStudents();
+		List<PassingStudents> passingStudentsList = new ArrayList<PassingStudents>();
+		while (iterator.hasNext()){
+			Object[] row = (Object[])iterator.next();
+			PassingStudents passingStudent = new PassingStudents();
+			passingStudent.setId((Integer)row[0]);
+			passingStudent.setFirstName((String)row[1]);
+			passingStudent.setLastName((String)row[2]);
+			passingStudent.setLevel((Integer)row[3]);
+			passingStudent.setAverage((int)Math.round((Double)row[4]));
+			passingStudentsList.add(passingStudent);
+		}
+		return passingStudentsList;
+	}
+	
     private Student transferDtoToStudent(Student student, StudentDTO studentDto) {
     	student.setFirstName(studentDto.getFirstName());
 		student.setLastName(studentDto.getLastName());
@@ -74,5 +93,7 @@ public class StudentServiceImpl implements StudentService {
 	    studentDto.setStatus(student.getStatus());
 	    return studentDto;
     }
+
+
 	
 }

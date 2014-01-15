@@ -1,5 +1,7 @@
 package multiModuleSpringMVC.web.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
 import multiModuleSpringMVC.core.service.StudentService;
@@ -77,6 +80,15 @@ public class StudentController {
 		    model.addAttribute("message", "Student does not exist");
 		}
 		return viewStudents(model);
+	}
+	
+	@RequestMapping(value="/passed")
+	public ModelAndView viewPassingStudents() {
+		ModelAndView mav = new ModelAndView();
+		List<PassingStudents> passers = studentService.getPassingStudents();
+		mav.setViewName("viewPassers");
+		mav.addObject("passers", passers);
+		return mav;
 	}
 	
 }
