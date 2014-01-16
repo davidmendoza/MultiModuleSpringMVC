@@ -28,13 +28,7 @@
     <bonecp.version>0.8.0.RELEASE</bonecp.version>
     <mysql-connector-java.version>5.1.10</mysql-connector-java.version>
     <ehcache.version>2.8.0</ehcache.version>
-    <hibernate-ehcache.version>4.3.0.Final</hibernate-ehcache.version>
-    
-    <!-- Database connection settings  -->
-    <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-    <jdbc.url>jdbc:mysql://localhost:3306/StudentMVC</jdbc.url>
-    <jdbc.username>root</jdbc.username>
-    <jdbc.password>1234</jdbc.password>
+    <hibernate-ehcache.version>4.2.8.Final</hibernate-ehcache.version>
     
     <!-- pluginManagement versions  -->
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
@@ -121,13 +115,7 @@
           </dependency>
       </dependencies> 
   </dependencyManagement>
-  <build>
-      <resources>
-          <resource>
-              <directory>/infra/src/main/resources/config/</directory>
-              <filtering>true</filtering>
-          </resource>
-      </resources>
+  <build>      
       <pluginManagement>
           <plugins>
               <plugin>

@@ -12,22 +12,22 @@
  http://www.springframework.org/schema/tx 
  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
    
-   <context:property-placeholder location="classpath:config/database.properties"/>
+   <context:property-placeholder location="classpath:config/properties/*.properties"/>
    <tx:annotation-driven transaction-manager="transactionManager"/>
    
    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">	
-      <property name="driverClass" value="${jdbc.driverClassName}"/>
-	  <property name="jdbcUrl" value="${jdbc.url}"/>
-	  <property name="username" value="${jdbc.username}"/>
-	  <property name="password" value="${jdbc.password}"/>
-	  <property name="idleConnectionTestPeriod" value="60"/>
-      <property name="idleMaxAge" value="240"/>
-      <property name="maxConnectionsPerPartition" value="30"/>
-      <property name="minConnectionsPerPartition" value="10"/>
-      <property name="partitionCount" value="3"/>
-      <property name="acquireIncrement" value="5"/>
-      <property name="statementsCacheSize" value="100"/>
-      <property name="releaseHelperThreads" value="3"/> 
+      <property name="driverClass" value="${db.driverClassName}"/>
+	  <property name="jdbcUrl" value="${db.url}"/>
+	  <property name="username" value="${db.username}"/>
+	  <property name="password" value="${db.password}"/>
+	  <property name="idleConnectionTestPeriod" value="${cp.idleConnectionTestPeriod}"/>
+      <property name="idleMaxAge" value="${cp.idleMaxAge}"/>
+      <property name="maxConnectionsPerPartition" value="${cp.maxConnectionsPerPartition}"/>
+      <property name="minConnectionsPerPartition" value="${cp.minConnectionsPerPartition}"/>
+      <property name="partitionCount" value="${cp.partitionCount}"/>
+      <property name="acquireIncrement" value="${cp.acquireIncrement}"/>
+      <property name="statementsCacheSize" value="${cp.statementsCacheSize}"/>
+      <property name="releaseHelperThreads" value="${cp.releaseHelperThreads}"/> 
   </bean>
   
   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

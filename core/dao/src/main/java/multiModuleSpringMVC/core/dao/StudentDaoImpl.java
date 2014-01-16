@@ -40,7 +40,7 @@ public class StudentDaoImpl implements StudentDao {
 	public int deleteStudent(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query1 = session.createSQLQuery("delete from SUBJECT where STUDENT_ID = "+id);
-		query1.executeUpdate(); 
+		query1.executeUpdate();
 		Query query = session.createQuery("delete from Student where id = :id");
 		query.setInteger("id", id);
 		return query.executeUpdate();
