@@ -34,7 +34,7 @@
      <form:errors path="grade"/><br/>
      <input type="submit" value="Save Subject"/>
      </form:form>
-     <a href="${contextPath}/student/view">Back to Student List</a><br/>
+     <a href="${contextPath}/student/view?page=0">Back to Student List</a><br/>
      <b>${message}</b>
      
 </body>

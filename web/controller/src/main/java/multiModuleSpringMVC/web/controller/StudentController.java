@@ -1,12 +1,12 @@
 package multiModuleSpringMVC.web.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.dto.StudentDTO;
-import multiModuleSpringMVC.core.model.Student;
 import multiModuleSpringMVC.core.service.StudentService;
 
 @Controller
 @RequestMapping(value="/student")
 public class StudentController {
     
+	private static final int maxResult = 5;
+	
 	@Autowired
 	private StudentService studentService;
 	
@@ -51,25 +51,27 @@ public class StudentController {
 		        mav.addObject("message", "Updated Student Details");
 			}
 		    mav.setViewName("viewStudents");
-			mav.addObject("students", studentService.getStudentList());
+			mav.addObject("students", studentService.getStudentList(0));
 		}
 		
 		return mav;
 	}
 	
-	@RequestMapping(value="/view")
-	public String viewStudents(@RequestParam(value="page")String page, Model model) {
-		PagedListHolder<StudentDTO> pageListHolder = new PagedListHolder<StudentDTO>(studentService.getStudentList());
-		pageListHolder.setPageSize(5);
-		if (page.equals("next")) {
-			pageListHolder.nextPage();
-		} else if (page.equals("previous")) {
-			pageListHolder.previousPage();
-		} else if (page.equals("last")) {
-			pageListHolder.getLastLinkedPage();
-		}
-		List<StudentDTO> studentList = pageListHolder.getPageList();
+	@RequestMapping(value="/view", method = RequestMethod.GET)
+	public String viewStudents(@RequestParam(value="page", defaultValue="1")int page, Model model) {
+		List<StudentDTO> studentList = studentService.getStudentList(page);
 	    model.addAttribute("students", studentList);
+		Map<String, Integer> pageMap = new HashMap<String, Integer>();
+		pageMap.put("nextPage", page);
+		pageMap.put("prevPage", 0);
+		
+		if (studentList.size() > maxResult-1) {
+		    pageMap.put("nextPage", page+1);
+		} 
+		if (page > 0) {
+		    pageMap.put("prevPage", page-1);
+		}
+		model.addAttribute("pageMap", pageMap);
 		return "viewStudents";
 	}
 	
@@ -92,13 +94,13 @@ public class StudentController {
 		} else {
 		    model.addAttribute("message", "Student does not exist");
 		}
-		return viewStudents("start", model);
+		return viewStudents(0, model);
 	}
 	
 	@RequestMapping(value="/passed")
 	public ModelAndView viewPassingStudents() {
 		ModelAndView mav = new ModelAndView();
-		List<PassingStudents> passers = studentService.getPassingStudents();
+		List<StudentDTO> passers = studentService.getPassingStudents();
 		mav.setViewName("viewPassers");
 		mav.addObject("passers", passers);
 		return mav;

@@ -33,6 +33,8 @@ public class StudentDTO {
 	
 	private Set<Subject> subjects;
 	
+	private int average;
+	
 	public StudentDTO() {
 		
 	}
@@ -92,6 +94,16 @@ public class StudentDTO {
 	public void setSubjects(Set<Subject> subjects) {
 		this.subjects = subjects;
 	}
+
+	public int getAverage() {
+		return average;
+	}
+
+	public void setAverage(int average) {
+		this.average = average;
+	}
+	
+	
 
 
 }

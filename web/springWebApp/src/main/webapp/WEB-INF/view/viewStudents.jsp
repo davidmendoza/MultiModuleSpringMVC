@@ -35,7 +35,7 @@
         </tr>
         </c:forEach>
     </table>
-    <a href="${contextPath}/student/view?page=previous">Previous</a>    <a href="${contextPath}/student/view?page=next">Next</a><br/>
+    <a href="${contextPath}/student/view?page=${pageMap.prevPage}">Previous</a>    <a href="${contextPath}/student/view?page=${pageMap.nextPage}">Next</a><br/>
     <a href="${contextPath}/student/add">Add New Student</a><br/>
     <a href="${contextPath}/student/passed">View Passing Students</a><br/>
     <a href="${contextPath}/index">Back</a><br/>

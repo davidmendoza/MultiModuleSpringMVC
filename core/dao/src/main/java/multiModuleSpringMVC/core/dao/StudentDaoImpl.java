@@ -14,6 +14,7 @@ import multiModuleSpringMVC.core.model.Student;
 @Repository
 public class StudentDaoImpl implements StudentDao {
 	
+	private static final int maxResults = 5;
     @Autowired	
 	private SessionFactory sessionFactory;
 
@@ -25,8 +26,10 @@ public class StudentDaoImpl implements StudentDao {
 		sessionFactory.getCurrentSession().update(student);
 	}
 	
-	public List<Student> getStudentList() {
+	public List<Student> getStudentList(int page) {
 		Query query = sessionFactory.getCurrentSession().createQuery("from Student");
+		query.setFirstResult(page * maxResults);
+		query.setMaxResults(maxResults);
 		return (List<Student>)query.list();
 	}
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import multiModuleSpringMVC.core.dao.StudentDao;
-import multiModuleSpringMVC.core.dto.PassingStudents;
 import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.model.Student;
 
@@ -27,8 +26,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Transactional
-	public List<StudentDTO> getStudentList() {
-		List<Student> students = studentDao.getStudentList();
+	public List<StudentDTO> getStudentList(int page) {
+		List<Student> students = studentDao.getStudentList(page);
 		List<StudentDTO> studentDtos = new ArrayList<StudentDTO>();
 		for (Student student:students) {
 			StudentDTO studentDto = new StudentDTO();
@@ -59,12 +58,12 @@ public class StudentServiceImpl implements StudentService {
 	}
     
 	@Transactional
-	public List<PassingStudents> getPassingStudents() {
+	public List<StudentDTO> getPassingStudents() {
 		Iterator<Object[]> iterator = studentDao.getPassingStudents();
-		List<PassingStudents> passingStudentsList = new ArrayList<PassingStudents>();
+		List<StudentDTO> passingStudentsList = new ArrayList<StudentDTO>();
 		while (iterator.hasNext()){
 			Object[] row = (Object[])iterator.next();
-			PassingStudents passingStudent = new PassingStudents();
+			StudentDTO passingStudent = new StudentDTO();
 			passingStudent.setId((Integer)row[0]);
 			passingStudent.setFirstName((String)row[1]);
 			passingStudent.setLastName((String)row[2]);
