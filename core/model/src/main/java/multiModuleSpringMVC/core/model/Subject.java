@@ -12,7 +12,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="SUBJECT")
 public class Subject {
 
@@ -32,7 +36,7 @@ public class Subject {
 	@ManyToOne
 	@JoinColumn(name="STUDENT_ID")
 	private Student student;
-
+	
 	public int getId() {
 		return id;
 	}

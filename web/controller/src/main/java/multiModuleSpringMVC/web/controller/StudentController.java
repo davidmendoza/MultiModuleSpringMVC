@@ -46,12 +46,13 @@ public class StudentController {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
 		        mav.addObject("message", "New Student Added");
+		        mav.addObject("students", studentService.getStudentList(0));
 			} else {
 				studentService.updateStudent(student);
 		        mav.addObject("message", "Updated Student Details");
+		        mav.addObject("students", studentService.getStudentList(student.getPageNo()-1));
 			}
 		    mav.setViewName("viewStudents");
-			mav.addObject("students", studentService.getStudentList(0));
 		}
 		
 		return mav;
@@ -75,10 +76,11 @@ public class StudentController {
 		return "viewStudents";
 	}
 	
-	@RequestMapping(value="/edit/{studentId}")
-	public String viewEditPage(@PathVariable("studentId")int id, Model model) {
+	@RequestMapping(value="/edit/{page}-{studentId}")
+	public String viewEditPage(@PathVariable("studentId") int id, @PathVariable("page") int page, Model model) {
 		StudentDTO student = studentService.getStudent(id);
 		if (student != null) {
+			student.setPageNo(page);
 		    model.addAttribute("student", student);
 		} else {
 			model.addAttribute("student", new StudentDTO());
@@ -86,15 +88,15 @@ public class StudentController {
 		return "addStudent";
 	}
 	
-	@RequestMapping(value="/delete/{studentId}")
-	public String deleteStudent(@PathVariable("studentId")int id, Model model) {
+	@RequestMapping(value="/delete/{page}-{studentId}")
+	public String deleteStudent(@PathVariable("studentId")int id, @PathVariable("page")int page, Model model) {
 		int isStudentDeleted = studentService.deleteStudent(id);
 		if (isStudentDeleted == 1) {
 		    model.addAttribute("message", "Deleted Student");
 		} else {
 		    model.addAttribute("message", "Student does not exist");
 		}
-		return viewStudents(0, model);
+		return viewStudents(page, model);
 	}
 	
 	@RequestMapping(value="/passed")

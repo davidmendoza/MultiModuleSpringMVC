@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,8 @@ public class StudentServiceImpl implements StudentService {
 	@Transactional
 	public void addStudent(StudentDTO studentDto) {
 		Student student = new Student();
-		student = transferDtoToStudent(student, studentDto);
+		List<String> props = getPropertyList();
+		copyBeanProperties(studentDto, student, props);
 		studentDao.addStudent(student);
 	}
 	
@@ -29,9 +32,10 @@ public class StudentServiceImpl implements StudentService {
 	public List<StudentDTO> getStudentList(int page) {
 		List<Student> students = studentDao.getStudentList(page);
 		List<StudentDTO> studentDtos = new ArrayList<StudentDTO>();
+		List<String> props = getPropertyList();
 		for (Student student:students) {
 			StudentDTO studentDto = new StudentDTO();
-			studentDto = transferStudentToDto(student, studentDto);
+			copyBeanProperties(student, studentDto, props);
 			studentDtos.add(studentDto);
 		}
 		return studentDtos;
@@ -41,7 +45,9 @@ public class StudentServiceImpl implements StudentService {
 	public StudentDTO getStudent(int id) {
 		Student student = studentDao.getStudent(id);
 		StudentDTO studentDto = new StudentDTO();
-		return transferStudentToDto(student, studentDto);
+		List<String> props = getPropertyList();
+		copyBeanProperties(student, studentDto, props);
+		return studentDto; 
 	}
 
 	@Transactional
@@ -52,8 +58,8 @@ public class StudentServiceImpl implements StudentService {
 	@Transactional
 	public void updateStudent(StudentDTO studentDto) {
 		Student updateStudent = studentDao.getStudent(studentDto.getId());
-		updateStudent = transferDtoToStudent(updateStudent, studentDto);
-		updateStudent.setFirstName(studentDto.getFirstName());
+		List<String> props = getPropertyList();
+		copyBeanProperties(studentDto, updateStudent, props);
 		studentDao.updateStudent(updateStudent);
 	}
     
@@ -73,24 +79,32 @@ public class StudentServiceImpl implements StudentService {
 		}
 		return passingStudentsList;
 	}
-	
-    private Student transferDtoToStudent(Student student, StudentDTO studentDto) {
-    	student.setFirstName(studentDto.getFirstName());
-		student.setLastName(studentDto.getLastName());
-		student.setLevel(studentDto.getLevel());
-		student.setStatus(studentDto.getStatus());
-		student.setGender(studentDto.getGender());
-		return student;
+    
+    public static void copyBeanProperties(
+	    final Object source,
+	    final Object target,
+	    final Iterable<String> properties){
+
+	    final BeanWrapper src = new BeanWrapperImpl(source);
+	    final BeanWrapper trg = new BeanWrapperImpl(target);
+
+	    for(final String propertyName : properties){
+	        trg.setPropertyValue(
+	            propertyName,
+	            src.getPropertyValue(propertyName)
+	        );
+	    }
     }
     
-    private StudentDTO transferStudentToDto(Student student, StudentDTO studentDto) {
-        studentDto.setId(student.getId());
-	    studentDto.setFirstName(student.getFirstName());
-	    studentDto.setLastName(student.getLastName());
-	    studentDto.setGender(student.getGender());
-	    studentDto.setLevel(student.getLevel());
-	    studentDto.setStatus(student.getStatus());
-	    return studentDto;
+    public static List<String> getPropertyList() {
+    	List<String> props = new ArrayList<String>();
+    	props.add("id");
+		props.add("firstName");
+		props.add("lastName");
+		props.add("gender");
+		props.add("level");
+		props.add("status");
+		return props;
     }
 
 

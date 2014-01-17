@@ -17,7 +17,6 @@
             <th>Last Name</th>
             <th>Year Level</th>
             <th>Average</th>
-            <th>Action</th>
             <th>Manage Subjects</th>
         </tr>
         <c:forEach items="${passers}" var="student">
@@ -27,8 +26,6 @@
             <td>${student.lastName}</td>
             <td>${student.level}</td>
             <td>${student.average}</td>
-            <td><a href="${contextPath}/student/edit/${student.id}">Update | </a>
-            <a href="${contextPath}/student/delete/${student.id}">Delete</a></td>
             <td><a href="${contextPath}/subject/manage/${student.id}">Subjects</a></td>
         </tr>
         </c:forEach>

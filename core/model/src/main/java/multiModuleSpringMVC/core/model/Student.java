@@ -2,6 +2,7 @@ package multiModuleSpringMVC.core.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,7 +36,7 @@ public class Student {
 	@Column(name="YEAR_LEVEL")
     private int level;
 	
-	@OneToMany(mappedBy="student", cascade=javax.persistence.CascadeType.REMOVE)
+	@OneToMany(mappedBy="student", cascade=CascadeType.ALL)
 	private Set<Subject> subjects;
 	
 	@Column(name="STATUS")

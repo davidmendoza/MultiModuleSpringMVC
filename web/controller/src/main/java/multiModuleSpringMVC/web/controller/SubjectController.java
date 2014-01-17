@@ -1,5 +1,7 @@
 package multiModuleSpringMVC.web.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import multiModuleSpringMVC.core.model.Subject;
@@ -28,8 +30,9 @@ public class SubjectController {
     
     @RequestMapping(value="manage/{studentId}")
     public ModelAndView openSubjectPage(@PathVariable("studentId")int id, ModelAndView mav) {
-    	mav.addObject("student", studentService.getStudent(id));
-    	mav.addObject("subjects", subjService.getSubjectList(id));
+    	List<Subject> subjList = subjService.getSubjectList(id);
+    	mav.addObject("student", subjList.get(0).getStudent());
+    	mav.addObject("subjects", subjList);
     	mav.addObject("gpa", subjService.getGPA(id));
     	mav.addObject("subject", new Subject());
     	mav.setViewName("manageSubjects");
@@ -38,7 +41,7 @@ public class SubjectController {
     
     @RequestMapping(value="process/{studentId}", method=RequestMethod.POST)
     public ModelAndView addSubjectAndGrade(@PathVariable("studentId")int id, @Valid @ModelAttribute("subject") Subject subject,
-    	   BindingResult result, Model model) {
+    	   BindingResult result) {
     	ModelAndView mav = new ModelAndView();
     	if (result.hasErrors()) {
     		mav.addObject("message", "Grade should be between 65-99 and Fields should not be blank");

@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import multiModuleSpringMVC.core.model.Student;
 import multiModuleSpringMVC.core.model.Subject;
 import multiModuleSpringMVC.core.model.TransTable;
 
@@ -23,15 +24,14 @@ public class SubjectDaoImpl implements SubjectDao {
 	private SessionFactory sessionFactory;
 	
 	public void addSubject(int id, Subject subject) {
-		String sql = "INSERT INTO SUBJECT(GRADE, NAME, STUDENT_ID) VALUES(:grade, :name, :id)";
-		Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-		query.setInteger("id", id);
-		query.setString("name", subject.getName());
-		query.setInteger("grade", subject.getGrade());
-		query.executeUpdate();
+		System.out.println("INSIDE ADD SUBJECT...");
+		Session session = sessionFactory.getCurrentSession();
+		subject.setStudent((Student)session.load(Student.class, id));
+		session.save(subject);
 	}
 
 	public List<Subject> getSubjectList(int id) {
+		System.out.println("INSIDE GET SUBJECT LIST...");
 		String hql = "SELECT sbj from Student st JOIN st.subjects sbj WHERE st.id = :id";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setInteger("id", id);
@@ -39,11 +39,11 @@ public class SubjectDaoImpl implements SubjectDao {
 	}
 
 	public void updateSubject(Subject subject) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public Map<String, Object> getGPA(int id) {
+		System.out.println("INSIDE GET GPA...");
 		Map<String, Object> gpaMap = new HashMap<String, Object>();
 		Integer ave = null;
 		Character gpa = null;
@@ -66,9 +66,16 @@ public class SubjectDaoImpl implements SubjectDao {
 		}
 		gpaMap.put("Average", ave);
 		gpaMap.put("GPA", gpa);
-		
 		return gpaMap;
 	}
 
-    
+    public static void printStatistics(SessionFactory sf) {
+    	System.out.println("PRINTING STATISTICS...");
+    	System.out.println("ENTITY LOAD COUNT: "+sf.getStatistics().getEntityLoadCount());
+    	System.out.println("ENTITY FETCH COUNT: "+sf.getStatistics().getEntityFetchCount());
+    	System.out.println("ENTITY INSERT COUNT: "+sf.getStatistics().getEntityInsertCount());
+    	System.out.println("ENTITY DELETE COUNT: "+sf.getStatistics().getEntityDeleteCount());
+    	System.out.println("2ND LEVEL CACHE HIT COUNT: "+sf.getStatistics().getSecondLevelCacheHitCount());
+    	System.out.println("QUERY CACHE HIT COUNT: "+sf.getStatistics().getQueryCacheHitCount());
+    }
 }

@@ -29,8 +29,8 @@
             <td>${student.gender}</td>
             <td>${student.level}</td>
             <td>${student.status}</td>
-            <td><a href="${contextPath}/student/edit/${student.id}">Update | </a>
-            <a href="${contextPath}/student/delete/${student.id}">Delete</a></td>
+            <td><a href="${contextPath}/student/edit/${pageMap.nextPage}-${student.id}">Update | </a>
+            <a href="${contextPath}/student/delete/${pageMap.nextPage}-${student.id}">Delete</a></td>
             <td><a href="${contextPath}/subject/manage/${student.id}">Subjects</a></td>
         </tr>
         </c:forEach>

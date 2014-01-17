@@ -35,6 +35,8 @@ public class StudentDTO {
 	
 	private int average;
 	
+	private int pageNo;
+	
 	public StudentDTO() {
 		
 	}
@@ -101,6 +103,14 @@ public class StudentDTO {
 
 	public void setAverage(int average) {
 		this.average = average;
+	}
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
 	}
 	
 	
