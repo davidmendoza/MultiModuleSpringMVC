@@ -19,7 +19,7 @@ import multiModuleSpringMVC.core.model.TransTable;
 
 @Repository
 public class SubjectDaoImpl implements SubjectDao {
-
+	
 	@Autowired	
 	private SessionFactory sessionFactory;
 	
@@ -36,10 +36,6 @@ public class SubjectDaoImpl implements SubjectDao {
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setInteger("id", id);
 		return (List<Subject>)query.list();
-	}
-
-	public void updateSubject(Subject subject) {
-		
 	}
 
 	public Map<String, Object> getGPA(int id) {
@@ -66,6 +62,7 @@ public class SubjectDaoImpl implements SubjectDao {
 		}
 		gpaMap.put("Average", ave);
 		gpaMap.put("GPA", gpa);
+		System.out.println("2ND LEVEL CACHE HIT COUNT: "+sessionFactory.getStatistics().getSecondLevelCacheHitCount());
 		return gpaMap;
 	}
 
@@ -78,4 +75,10 @@ public class SubjectDaoImpl implements SubjectDao {
     	System.out.println("2ND LEVEL CACHE HIT COUNT: "+sf.getStatistics().getSecondLevelCacheHitCount());
     	System.out.println("QUERY CACHE HIT COUNT: "+sf.getStatistics().getQueryCacheHitCount());
     }
+
+	public void deleteSubject(int id) {
+		Query query = sessionFactory.getCurrentSession().createQuery("delete from Subject where id = :id");
+		query.setInteger("id", id);
+		query.executeUpdate();
+	}
 }

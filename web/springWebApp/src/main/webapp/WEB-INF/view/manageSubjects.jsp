@@ -10,31 +10,33 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 </head>
 <body>
-     <h3>Subjects of ${student.firstName}</h3>
+     <h3>Subjects</h3>
      <table border="2">
          <tr>
              <th>Subject Name</th>
              <th>Subject Grade</th>
+             <th>Action</th>
          </tr>
      
      <c:forEach items="${subjects}" var="subject">
          <tr>
              <td>${subject.name}</td>
              <td>${subject.grade}</td>
+             <td><a href="${contextPath}/subject/delete/${studentId}-${subject.id}">Delete</a></td>
          </tr>
      </c:forEach>
      </table>
      
-     <h4>Average: ${gpa.Average} GPA:${gpa.GPA}</h4>
+     <h4>Average: ${gpa.Average} GPA: ${gpa.GPA}</h4>
      <h4>Add new Subject and Grade</h4>
-     <form:form method="post" action="${contextPath}/subject/process/${student.id}" commandName="subject">
+     <form:form method="post" action="${contextPath}/subject/process/${studentId}" commandName="subject">
      Subject name: <form:input path="name" value="${subject.name}"/>
      <form:errors path="name"/><br/>
      Subject grade: <form:input path="grade" value="${subject.grade}"/>
      <form:errors path="grade"/><br/>
      <input type="submit" value="Save Subject"/>
      </form:form>
-     <a href="${contextPath}/student/view?page=0">Back to Student List</a><br/>
+     <a href="${contextPath}/index">Back to Index</a><br/>
      <b>${message}</b>
      
 </body>

@@ -10,9 +10,9 @@ public interface SubjectService {
     public void addSubject(int id, Subject subject);
     
     public List<Subject> getSubjectList(int id);
-    
-    public void updateSubject(Subject subject);
 
     public Map<String, Object>getGPA(int id);
+    
+    public void deleteSubject(int id);
 	
 }

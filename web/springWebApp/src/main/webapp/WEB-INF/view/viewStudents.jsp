@@ -29,13 +29,20 @@
             <td>${student.gender}</td>
             <td>${student.level}</td>
             <td>${student.status}</td>
-            <td><a href="${contextPath}/student/edit/${pageMap.nextPage}-${student.id}">Update | </a>
-            <a href="${contextPath}/student/delete/${pageMap.nextPage}-${student.id}">Delete</a></td>
+            <td><a href="${contextPath}/student/edit/${pageMap.currPage}-${student.id}">Update | </a>
+            <a href="${contextPath}/student/delete/${pageMap.currPage}-${student.id}">Delete</a></td>
             <td><a href="${contextPath}/subject/manage/${student.id}">Subjects</a></td>
         </tr>
         </c:forEach>
     </table>
-    <a href="${contextPath}/student/view?page=${pageMap.prevPage}">Previous</a>    <a href="${contextPath}/student/view?page=${pageMap.nextPage}">Next</a><br/>
+    <c:if test="${pageMap.currPage > 0}">
+        <a href="${contextPath}/student/view?page=${pageMap.prevPage}">Previous</a>  
+    </c:if>
+    <c:if test="${pageMap.totalResult == pageMap.maxResults}">
+        <a href="${contextPath}/student/view?page=${pageMap.nextPage}">Next</a>
+    </c:if>
+    <br/>
+    <h3>total: ${pageMap.totalResult} max: ${pageMap.maxResults }</h3>
     <a href="${contextPath}/student/add">Add New Student</a><br/>
     <a href="${contextPath}/student/passed">View Passing Students</a><br/>
     <a href="${contextPath}/index">Back</a><br/>

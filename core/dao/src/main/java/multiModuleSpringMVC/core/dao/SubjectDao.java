@@ -11,8 +11,7 @@ public interface SubjectDao {
     
     public List<Subject> getSubjectList(int id);
     
-    public void updateSubject(Subject subject);
-    
     public Map<String, Object>getGPA(int id);
     
+    public void deleteSubject(int id);
 }

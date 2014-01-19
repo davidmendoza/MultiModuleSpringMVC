@@ -11,30 +11,26 @@ import multiModuleSpringMVC.core.dao.SubjectDao;
 import multiModuleSpringMVC.core.model.Subject;
 
 @Service
+@Transactional
 public class SubjectServiceImpl implements SubjectService {
 	
 	@Autowired
 	SubjectDao subjectDao;
 	
-	@Transactional
 	public void addSubject(int id, Subject subject) {
 		subjectDao.addSubject(id, subject);
-
 	}
 	
-	@Transactional
 	public List<Subject> getSubjectList(int id) {
 		return subjectDao.getSubjectList(id);
 	}
-
-	public void updateSubject(Subject subject) {
-		// TODO Auto-generated method stub
-
-	}
 	
-	@Transactional
 	public Map<String, Object> getGPA(int id) {
 		return subjectDao.getGPA(id);
+	}
+	
+	public void deleteSubject(int id) {
+		subjectDao.deleteSubject(id);
 	}
 
 }

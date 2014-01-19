@@ -10,7 +10,6 @@ import multiModuleSpringMVC.core.service.SubjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +30,7 @@ public class SubjectController {
     @RequestMapping(value="manage/{studentId}")
     public ModelAndView openSubjectPage(@PathVariable("studentId")int id, ModelAndView mav) {
     	List<Subject> subjList = subjService.getSubjectList(id);
-    	mav.addObject("student", subjList.get(0).getStudent());
+    	mav.addObject("subjectId", id);
     	mav.addObject("subjects", subjList);
     	mav.addObject("gpa", subjService.getGPA(id));
     	mav.addObject("subject", new Subject());
@@ -39,6 +38,14 @@ public class SubjectController {
     	return mav;
     }
     
+    @RequestMapping(value="delete/{studentId}-{subjectId}")
+    public ModelAndView deleteSubject(@PathVariable("studentId")int studentId, @PathVariable("subjectId")int subjId) {
+    	ModelAndView mav = new ModelAndView();
+    	subjService.deleteSubject(subjId);
+    	mav.addObject("message", "Deleted Subject");
+    	return openSubjectPage(studentId, mav);
+    }
+
     @RequestMapping(value="process/{studentId}", method=RequestMethod.POST)
     public ModelAndView addSubjectAndGrade(@PathVariable("studentId")int id, @Valid @ModelAttribute("subject") Subject subject,
     	   BindingResult result) {
@@ -47,10 +54,11 @@ public class SubjectController {
     		mav.addObject("message", "Grade should be between 65-99 and Fields should not be blank");
     	} else {
     	    subjService.addSubject(id, subject);
-    	    mav.addObject("message", "Recorded new subject!");
+    	    mav.addObject("message", "Recorded new subject");
     	}
     	return openSubjectPage(id, mav);
     }
+    
     
     
 }

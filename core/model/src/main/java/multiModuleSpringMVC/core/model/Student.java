@@ -19,7 +19,7 @@ import org.hibernate.annotations.Type;
 
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="STUDENT")
 public class Student {
 	

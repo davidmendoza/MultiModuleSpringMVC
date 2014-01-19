@@ -14,7 +14,7 @@ import multiModuleSpringMVC.core.model.Student;
 @Repository
 public class StudentDaoImpl implements StudentDao {
 	
-	private static final int MAX_RESULTS = 5;
+	public static final int MAX_RESULTS = 5;
 	private static final int PASSING_GRADE = 75;
 	
     @Autowired	
@@ -35,7 +35,7 @@ public class StudentDaoImpl implements StudentDao {
 	public List<Student> getStudentList(int page) {
 		System.out.println("INSIDE GET STUDENT LIST...");
 		Query query = sessionFactory.getCurrentSession().createQuery("from Student")
-		    .setCacheable(true)
+		    //.setCacheable(true)
 		    .setFirstResult(page * MAX_RESULTS)
 		    .setMaxResults(MAX_RESULTS);
 		List<Student> students = query.list();
@@ -70,7 +70,7 @@ public class StudentDaoImpl implements StudentDao {
 		String hql = ("SELECT st.id, st.firstName, st.lastName, st.level, AVG(subj.grade) FROM Student st JOIN "
 				+ "st.subjects subj WHERE st.status = 'Y' GROUP BY st.id HAVING AVG(subj.grade) >= "+PASSING_GRADE
 				+ " ORDER BY st.level asc, AVG(subj.grade) desc");
-		Iterator<Object[]> iterator = session.createQuery(hql).setCacheable(true).list().iterator();
+		Iterator<Object[]> iterator = session.createQuery(hql).list().iterator();
 		System.out.println("2ND LEVEL CACHE HIT COUNT: "+sessionFactory.getStatistics().getSecondLevelCacheHitCount());
     	System.out.println("QUERY CACHE HIT COUNT: "+sessionFactory.getStatistics().getQueryCacheHitCount());
 		return iterator;

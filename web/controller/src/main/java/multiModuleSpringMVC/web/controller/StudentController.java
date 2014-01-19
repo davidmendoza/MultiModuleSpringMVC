@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import multiModuleSpringMVC.core.dao.StudentDaoImpl;
 import multiModuleSpringMVC.core.dto.StudentDTO;
 import multiModuleSpringMVC.core.service.StudentService;
 
 @Controller
 @RequestMapping(value="/student")
 public class StudentController {
-    
-	private static final int maxResult = 5;
 	
 	@Autowired
 	private StudentService studentService;
@@ -36,42 +35,37 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/process", method=RequestMethod.POST)
-	public ModelAndView addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result) {
-	    ModelAndView mav = new ModelAndView();
+	public String addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, Model model) {
+		String view = null;
 		if (result.hasErrors()) {
-	        mav.addObject("message", "Errors encountered. Please fill up the form again.");
-	        mav.setViewName("addStudent");
-	        mav.addObject("student", student);
+			model.addAttribute("message", "Errors encountered. Please fill up the form again.");
+			model.addAttribute("student", student);
+			view = "addStudent";
 		} else {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
-		        mav.addObject("message", "New Student Added");
-		        mav.addObject("students", studentService.getStudentList(0));
+		        model.addAttribute("message", "Added New Student");
+		        view ="index";
 			} else {
 				studentService.updateStudent(student);
-		        mav.addObject("message", "Updated Student Details");
-		        mav.addObject("students", studentService.getStudentList(student.getPageNo()-1));
+				model.addAttribute("message", "Updated Student Details");
+				view = viewStudents(student.getPageNo(), model);
 			}
-		    mav.setViewName("viewStudents");
+		    
 		}
-		
-		return mav;
+		return view;
 	}
 	
 	@RequestMapping(value="/view", method = RequestMethod.GET)
-	public String viewStudents(@RequestParam(value="page", defaultValue="1")int page, Model model) {
+	public String viewStudents(@RequestParam(value="page")int page, Model model) {
 		List<StudentDTO> studentList = studentService.getStudentList(page);
 	    model.addAttribute("students", studentList);
 		Map<String, Integer> pageMap = new HashMap<String, Integer>();
-		pageMap.put("nextPage", page);
-		pageMap.put("prevPage", 0);
-		
-		if (studentList.size() > maxResult-1) {
-		    pageMap.put("nextPage", page+1);
-		} 
-		if (page > 0) {
-		    pageMap.put("prevPage", page-1);
-		}
+		pageMap.put("nextPage", page+1);
+		pageMap.put("prevPage", page-1);
+		pageMap.put("currPage", page);
+		pageMap.put("totalResult", studentList.size());
+		pageMap.put("maxResults", StudentDaoImpl.MAX_RESULTS);
 		model.addAttribute("pageMap", pageMap);
 		return "viewStudents";
 	}
