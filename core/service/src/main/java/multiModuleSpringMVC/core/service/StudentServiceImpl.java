@@ -79,11 +79,21 @@ public class StudentServiceImpl implements StudentService {
 		}
 		return passingStudentsList;
 	}
-    
-    public static void copyBeanProperties(
-	    final Object source,
-	    final Object target,
-	    final Iterable<String> properties){
+
+    @Transactional
+    public List<StudentDTO> getSearchResults(String name) {
+        List<Student> students = studentDao.getSearchResults(name);
+        List<StudentDTO> studentDtos = new ArrayList<StudentDTO>();
+        List<String> props = getPropertyList();
+        for (Student student:students) {
+            StudentDTO studentDto = new StudentDTO();
+            copyBeanProperties(student, studentDto, props);
+            studentDtos.add(studentDto);
+        }
+        return studentDtos;
+    }
+
+    public static void copyBeanProperties(final Object source, final Object target, final Iterable<String> properties){
 
 	    final BeanWrapper src = new BeanWrapperImpl(source);
 	    final BeanWrapper trg = new BeanWrapperImpl(target);

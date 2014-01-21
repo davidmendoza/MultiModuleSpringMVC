@@ -18,4 +18,6 @@ public interface StudentService {
 	public void updateStudent(StudentDTO student);
 	
 	public List<StudentDTO> getPassingStudents();
+
+    public List<StudentDTO> getSearchResults(String name);
 }

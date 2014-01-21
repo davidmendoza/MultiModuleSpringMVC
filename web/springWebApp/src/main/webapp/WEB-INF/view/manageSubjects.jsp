@@ -17,7 +17,6 @@
              <th>Subject Grade</th>
              <th>Action</th>
          </tr>
-     
      <c:forEach items="${subjects}" var="subject">
          <tr>
              <td>${subject.name}</td>
@@ -26,7 +25,6 @@
          </tr>
      </c:forEach>
      </table>
-     
      <h4>Average: ${gpa.Average} GPA: ${gpa.GPA}</h4>
      <h4>Add new Subject and Grade</h4>
      <form:form method="post" action="${contextPath}/subject/process/${studentId}" commandName="subject">

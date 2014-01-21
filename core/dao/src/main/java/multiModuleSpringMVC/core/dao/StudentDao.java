@@ -18,5 +18,7 @@ public interface StudentDao {
 	public void updateStudent(Student student);
 	
 	public Iterator<Object[]> getPassingStudents();
+
+    public List<Student> getSearchResults(String name);
 	
 }

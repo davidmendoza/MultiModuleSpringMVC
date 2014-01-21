@@ -51,7 +51,6 @@ public class StudentController {
 				model.addAttribute("message", "Updated Student Details");
 				view = viewStudents(student.getPageNo(), model);
 			}
-		    
 		}
 		return view;
 	}
@@ -101,5 +100,25 @@ public class StudentController {
 		mav.addObject("passers", passers);
 		return mav;
 	}
+
+    @RequestMapping(value="/search")
+    public ModelAndView openSearchPage() {
+       return new ModelAndView("searchStudent");
+    }
+
+    @RequestMapping(value="/search/process")
+    public String viewSearchResults(@RequestParam("name") String name, Model model) {
+        List<StudentDTO> searchList = studentService.getSearchResults(name);
+        if (searchList.isEmpty()) {
+            model.addAttribute("message","No students found");
+            searchList = null;
+        } else {
+            model.addAttribute("students", searchList);
+            model.addAttribute("message","Success!");
+        }
+        return "searchStudent";
+    }
+
+
 	
 }

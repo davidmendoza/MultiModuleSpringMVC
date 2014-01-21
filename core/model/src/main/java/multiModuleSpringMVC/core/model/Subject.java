@@ -16,7 +16,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="SUBJECT")
 public class Subject {
 

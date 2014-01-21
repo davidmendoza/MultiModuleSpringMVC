@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,7 +43,6 @@
         <a href="${contextPath}/student/view?page=${pageMap.nextPage}">Next</a>
     </c:if>
     <br/>
-    <h3>total: ${pageMap.totalResult} max: ${pageMap.maxResults }</h3>
     <a href="${contextPath}/student/add">Add New Student</a><br/>
     <a href="${contextPath}/student/passed">View Passing Students</a><br/>
     <a href="${contextPath}/index">Back</a><br/>

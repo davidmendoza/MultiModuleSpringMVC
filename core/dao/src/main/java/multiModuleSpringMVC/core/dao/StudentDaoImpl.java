@@ -3,9 +3,11 @@ package multiModuleSpringMVC.core.dao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -75,5 +77,20 @@ public class StudentDaoImpl implements StudentDao {
     	System.out.println("QUERY CACHE HIT COUNT: "+sessionFactory.getStatistics().getQueryCacheHitCount());
 		return iterator;
 	}
-	
+
+    public List<Student> getSearchResults(String name) {
+        System.out.println("INSIDE SEARCH STUDENTS...");
+        Session session = sessionFactory.getCurrentSession();
+        Criteria crit = session.createCriteria(Student.class)
+                .add(Restrictions.or(
+                    Restrictions.ilike("firstName", name+"%"),
+                    Restrictions.ilike("lastName", name+"%")
+                ));
+        List<Student> result = crit.list();
+        return result;
+    }
+
+
+
+
 }
