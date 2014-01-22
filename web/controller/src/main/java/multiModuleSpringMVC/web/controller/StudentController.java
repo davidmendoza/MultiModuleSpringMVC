@@ -89,6 +89,7 @@ public class StudentController {
 		} else {
 		    model.addAttribute("message", "Student does not exist");
 		}
+
 		return viewStudents(page, model);
 	}
 	
@@ -107,16 +108,17 @@ public class StudentController {
     }
 
     @RequestMapping(value="/search/process")
-    public String viewSearchResults(@RequestParam("name") String name, Model model) {
+    public ModelAndView viewSearchResults(@RequestParam("name") String name) {
+        ModelAndView mav = new ModelAndView("searchStudent");
         List<StudentDTO> searchList = studentService.getSearchResults(name);
         if (searchList.isEmpty()) {
-            model.addAttribute("message","No students found");
+            mav.addObject("message", "No students found");
             searchList = null;
         } else {
-            model.addAttribute("students", searchList);
-            model.addAttribute("message","Success!");
+            mav.addObject("students", searchList);
+            mav.addObject("message", "Success!");
         }
-        return "searchStudent";
+        return mav;
     }
 
 

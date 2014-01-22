@@ -20,9 +20,30 @@
     <jdbc.url>jdbc:mysql://localhost:3306/StudentMVC</jdbc.url>
     <jdbc.username>root</jdbc.username>
     <jdbc.password>1234</jdbc.password>
+
+    <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
     
   </properties>
-  
+
+  <dependencies>
+      <dependency>
+          <groupId>com.jolbox</groupId>
+          <artifactId>bonecp</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>multiModuleSpringMVC</groupId>
+          <artifactId>model</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+  </dependencies>
   <build>
       <resources>
           <resource>

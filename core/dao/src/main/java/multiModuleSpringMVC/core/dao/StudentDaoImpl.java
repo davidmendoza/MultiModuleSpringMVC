@@ -86,8 +86,7 @@ public class StudentDaoImpl implements StudentDao {
                     Restrictions.ilike("firstName", name+"%"),
                     Restrictions.ilike("lastName", name+"%")
                 ));
-        List<Student> result = crit.list();
-        return result;
+        return (List<Student>)crit.list();
     }
 
 

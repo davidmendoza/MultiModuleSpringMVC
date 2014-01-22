@@ -10,6 +10,7 @@ import multiModuleSpringMVC.core.model.Gender;
 import multiModuleSpringMVC.core.model.Subject;
 
 
+
 public class StudentDTO {
 
     private int id;
