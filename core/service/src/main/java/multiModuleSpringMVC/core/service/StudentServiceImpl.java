@@ -19,6 +19,14 @@ public class StudentServiceImpl implements StudentService {
     
 	@Autowired
 	private StudentDao studentDao;
+
+    public StudentServiceImpl() {
+
+    }
+
+    public StudentServiceImpl(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
     
 	@Transactional
 	public void addStudent(StudentDTO studentDto) {
@@ -46,7 +54,9 @@ public class StudentServiceImpl implements StudentService {
 		Student student = studentDao.getStudent(id);
 		StudentDTO studentDto = new StudentDTO();
 		List<String> props = getPropertyList();
-		copyBeanProperties(student, studentDto, props);
+        if (student != null) {
+		    copyBeanProperties(student, studentDto, props);
+        }
 		return studentDto; 
 	}
 
