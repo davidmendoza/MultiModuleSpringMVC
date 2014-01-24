@@ -13,11 +13,16 @@ import multiModuleSpringMVC.core.model.Subject;
 @Service
 @Transactional
 public class SubjectServiceImpl implements SubjectService {
-	
+
 	@Autowired
 	SubjectDao subjectDao;
-	
-	public void addSubject(int id, Subject subject) {
+
+
+    public void setSubjectDao(SubjectDao subjectDao) {
+        this.subjectDao = subjectDao;
+    }
+
+    public void addSubject(int id, Subject subject) {
 		subjectDao.addSubject(id, subject);
 	}
 	

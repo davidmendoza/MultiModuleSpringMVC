@@ -58,7 +58,7 @@ public class UserTest {
         System.out.println(linkedList.get(1));
     }
 
-    @Test
+    @Test (expected = NullPointerException.class)
     public void mockList2() throws Exception {
         List<String> mockedList = mock(ArrayList.class);
         mockedList.add("once");
