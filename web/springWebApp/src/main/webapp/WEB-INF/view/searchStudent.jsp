@@ -52,6 +52,6 @@
     <b>${message}</b><br/>
     <a href="${contextPath}/student/add">Add New Student</a><br/>
     <a href="${contextPath}/student/passed">View Passing Students</a><br/>
-    <a href="${contextPath}/index">Back</a><br/>
+    <a href="${contextPath}/home">Back</a><br/>
 </body>
 </html>

@@ -30,6 +30,6 @@
         </tr>
         </c:forEach>
     </table>
-    <a href="${contextPath}/index">Back</a><br/>
+    <a href="${contextPath}/home">Back</a><br/>
 </body>
 </html>

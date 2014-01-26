@@ -45,7 +45,7 @@ public class StudentController {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
 		        model.addAttribute("message", "Added New Student");
-		        view ="index";
+		        view ="home";
 			} else {
 				studentService.updateStudent(student);
 				model.addAttribute("message", "Updated Student Details");
@@ -113,7 +113,6 @@ public class StudentController {
         List<StudentDTO> searchList = studentService.getSearchResults(name);
         if (searchList.isEmpty()) {
             mav.addObject("message", "No students found");
-            searchList = null;
         } else {
             mav.addObject("students", searchList);
             mav.addObject("message", "Success!");

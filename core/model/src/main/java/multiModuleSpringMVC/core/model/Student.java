@@ -1,17 +1,9 @@
 package multiModuleSpringMVC.core.model;
 
+import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -26,12 +18,9 @@ public class Student {
 	@Column(name="ID", unique=true, nullable=false)
     private int id;
 
-	@Column(name="FIRST_NAME")
-    private String firstName;
-	
-	@Column(name="LAST_NAME")
-    private String lastName;
-	
+    @Embedded
+    private Name name;
+
 	@Column(name="YEAR_LEVEL")
     private int level;
 	
@@ -45,7 +34,11 @@ public class Student {
 	@Column(name="GENDER")
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-	
+
+    @Temporal(value = TemporalType.DATE)
+    @Column(name="BIRTHDAY")
+    private Date birthday;
+
 	public Student() {
 		
 	}
@@ -56,22 +49,6 @@ public class Student {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public int getLevel() {
@@ -105,7 +82,12 @@ public class Student {
 	public void setSubjects(Set<Subject> subjects) {
 		this.subjects = subjects;
 	}
-	
-	
 
+    public Name getName() {
+        return name;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
 }

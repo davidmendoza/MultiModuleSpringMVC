@@ -26,8 +26,8 @@
 	               </form:select>
 	               <form:errors path="level"/><br/>
 	               <form:hidden path="id" value="${student.id}"/>
-	    Gender: <input type="radio" name="gender" value="Male" ${student.gender == 'Male' ? 'checked' : '' }>Male
-	    		<input type="radio" name="gender" value="Female" ${student.gender == 'Female' ? 'checked' : '' }>Female 
+	    Gender: <input type="radio" name="gender" value="MALE" ${student.gender == 'MALE' ? 'checked' : '' }>Male
+	    		<input type="radio" name="gender" value="FEMALE" ${student.gender == 'FEMALE' ? 'checked' : '' }>Female
 	    		<form:errors path="gender"/><br/>
 	   
 	    Status: <input type="radio" name="status" value="true" ${student.status == 'true' ? 'checked' : '' }>Active
@@ -36,7 +36,7 @@
 	       	    <form:hidden path="pageNo" value="${student.pageNo}"/>
 	    <input type="submit" value="Save Student"/>
 	</form:form>
-    <a href="${contextPath}/index">Back</a><br/>
+    <a href="${contextPath}/home">Back</a><br/>
     <b>${message}</b>
 </body>
 </html>

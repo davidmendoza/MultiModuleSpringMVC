@@ -9,11 +9,11 @@ public class IndexController {
 
 	@RequestMapping(value="/")
 	public ModelAndView mainPage() {
-		return new ModelAndView("index");
+		return new ModelAndView("homepage");
 	}
 	
-	@RequestMapping(value="/index")
+	@RequestMapping(value="/home")
 	public ModelAndView indexPage() {
-		return new ModelAndView("index");
+		return new ModelAndView("homepage");
 	}
 }

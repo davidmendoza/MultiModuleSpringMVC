@@ -1,10 +1,9 @@
 package multiModuleSpringMVC.core.service;
 
-import junit.framework.TestCase;
 import multiModuleSpringMVC.core.dao.StudentDao;
 import multiModuleSpringMVC.core.dto.StudentDTO;
+import multiModuleSpringMVC.core.model.Name;
 import multiModuleSpringMVC.core.model.Student;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,15 +15,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StudentServiceImplTest {
@@ -53,7 +46,7 @@ public class StudentServiceImplTest {
     public void testGetStudentList() {
         List<Student> list = new ArrayList<>();
         Student test = new Student();
-        test.setLastName("perez");
+        test.setName(new Name("amy", "perez"));
         list.add(test);
         when(studentDao.getStudentList(0)).thenReturn(list);
         List<StudentDTO> studentList = studentService.getStudentList(anyInt());
@@ -66,6 +59,7 @@ public class StudentServiceImplTest {
     public void testGetStudent() {
         Student student = new Student();
         student.setId(1);
+        student.setName(new Name());
         when(studentDao.getStudent(1)).thenReturn(student);
         StudentDTO studentDTO = studentService.getStudent(1);
         assertNotNull(studentDTO);
@@ -89,10 +83,10 @@ public class StudentServiceImplTest {
         studentToUpdate.setId(1);
         Student studentFromDb = new Student();
         studentFromDb.setId(1);
-        studentFromDb.setFirstName("pedro");
+        studentFromDb.setName(new Name("pedro","reyes"));
         when(studentDao.getStudent(1)).thenReturn(studentFromDb);
         studentService.updateStudent(studentToUpdate);
-        assertEquals("Update student failed, not same name", studentFromDb.getFirstName(), studentToUpdate.getFirstName());
+        assertEquals("Update student failed, not same name", studentFromDb.getName().getFirstName(), studentToUpdate.getFirstName());
         verify(studentDao, times(1)).getStudent(1);
     }
 
@@ -117,7 +111,7 @@ public class StudentServiceImplTest {
     @Test
     public void testGetSearchResults() {
         Student david = new Student();
-        david.setFirstName("david");
+        david.setName(new Name("david", "mendoza"));
         List<Student> list = new ArrayList<>();
         list.add(david);
         when(studentDao.getSearchResults("david")).thenReturn(list);

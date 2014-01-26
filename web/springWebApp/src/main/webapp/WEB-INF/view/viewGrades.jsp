@@ -40,7 +40,7 @@
 		</form:form>
 	</c:forEach>	
 	</table>
-	<a href="${contextPath}/index">Back to Main Menu</a><br/>
+	<a href="${contextPath}/home">Back to Main Menu</a><br/>
 	<b>${message}</b>
 </body>
 </html>

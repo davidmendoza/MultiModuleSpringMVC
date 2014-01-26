@@ -1,20 +1,16 @@
 package multiModuleSpringMVC.core.dto;
 
-import java.util.Set;
+import multiModuleSpringMVC.core.model.Gender;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import multiModuleSpringMVC.core.model.Gender;
-import multiModuleSpringMVC.core.model.Subject;
-
-
 
 public class StudentDTO {
 
     private int id;
-    
+
 	@Size(min=2, max=30, message="First name must be between 2-30 characters only")
 	@NotNull
     private String firstName;
@@ -31,8 +27,6 @@ public class StudentDTO {
 	
 	@NotNull(message="Please enter Student's gender")
 	private Gender gender;
-	
-	private Set<Subject> subjects;
 	
 	private int average;
 	
@@ -90,14 +84,6 @@ public class StudentDTO {
 		this.status = status;
 	}
 
-	public Set<Subject> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(Set<Subject> subjects) {
-		this.subjects = subjects;
-	}
-
 	public int getAverage() {
 		return average;
 	}
@@ -113,8 +99,5 @@ public class StudentDTO {
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
 	}
-	
-	
-
 
 }

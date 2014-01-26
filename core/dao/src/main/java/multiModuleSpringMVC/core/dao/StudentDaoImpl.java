@@ -41,15 +41,13 @@ public class StudentDaoImpl implements StudentDao {
 		    .setFirstResult(page * MAX_RESULTS)
 		    .setMaxResults(MAX_RESULTS);
 		List<Student> students = query.list();
-		System.out.println("2ND LEVEL CACHE HIT COUNT: "+sessionFactory.getStatistics().getSecondLevelCacheHitCount());
-    	System.out.println("QUERY CACHE HIT COUNT: "+sessionFactory.getStatistics().getQueryCacheHitCount());
 		return students;
 	}
 
 	public Student getStudent(int id) {
 		System.out.println("INSIDE GET STUDENT BY ID...");
 		Student st = (Student)sessionFactory.getCurrentSession().get(Student.class, id);
-		SubjectDaoImpl.printStatistics(sessionFactory);
+		//SubjectDaoImpl.printStatistics(sessionFactory);
 		return st;
 	}
 
@@ -62,19 +60,17 @@ public class StudentDaoImpl implements StudentDao {
 			session.delete(st);
 			delete = 1;
 		}
-		SubjectDaoImpl.printStatistics(sessionFactory);
+		//SubjectDaoImpl.printStatistics(sessionFactory);
 		return delete;
 	}
 
 	public Iterator<Object[]> getPassingStudents() {
 		System.out.println("INSIDE GET PASSING STUDENTS...");
 		Session session = sessionFactory.getCurrentSession();
-		String hql = ("SELECT st.id, st.firstName, st.lastName, st.level, AVG(subj.grade) FROM Student st JOIN "
+		String hql = ("SELECT st.id, st.name.firstName, st.name.lastName, st.level, AVG(subj.grade) FROM Student st JOIN "
 				+ "st.subjects subj WHERE st.status = 'Y' GROUP BY st.id HAVING AVG(subj.grade) >= "+PASSING_GRADE
 				+ " ORDER BY st.level asc, AVG(subj.grade) desc");
 		Iterator<Object[]> iterator = session.createQuery(hql).list().iterator();
-		System.out.println("2ND LEVEL CACHE HIT COUNT: "+sessionFactory.getStatistics().getSecondLevelCacheHitCount());
-    	System.out.println("QUERY CACHE HIT COUNT: "+sessionFactory.getStatistics().getQueryCacheHitCount());
 		return iterator;
 	}
 
@@ -83,8 +79,8 @@ public class StudentDaoImpl implements StudentDao {
         Session session = sessionFactory.getCurrentSession();
         Criteria crit = session.createCriteria(Student.class)
                 .add(Restrictions.or(
-                    Restrictions.ilike("firstName", name+"%"),
-                    Restrictions.ilike("lastName", name+"%")
+                    Restrictions.ilike("name.firstName", name+"%"),
+                    Restrictions.ilike("name.lastName", name+"%")
                 ));
         return (List<Student>)crit.list();
     }

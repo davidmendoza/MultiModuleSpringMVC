@@ -26,4 +26,7 @@
     <param-value>/WEB-INF/spring-mvc-servlet.xml</param-value>
   </context-param>
   
+  <welcome-file-list>
+      <welcome-file>homepage.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>

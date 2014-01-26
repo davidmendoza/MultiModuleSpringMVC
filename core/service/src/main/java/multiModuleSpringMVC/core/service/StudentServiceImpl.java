@@ -2,6 +2,7 @@ package multiModuleSpringMVC.core.service;
 
 import multiModuleSpringMVC.core.dao.StudentDao;
 import multiModuleSpringMVC.core.dto.StudentDTO;
+import multiModuleSpringMVC.core.model.Name;
 import multiModuleSpringMVC.core.model.Student;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -29,6 +30,8 @@ public class StudentServiceImpl implements StudentService {
         Student student = new Student();
         if (studentDto != null) {
             BeanUtils.copyProperties(studentDto, student);
+            Name name = new Name(studentDto.getFirstName(), studentDto.getLastName());
+            student.setName(name);
             studentDao.addStudent(student);
         }
 	}
@@ -40,6 +43,8 @@ public class StudentServiceImpl implements StudentService {
 		for (Student student:students) {
 			StudentDTO studentDto = new StudentDTO();
 			BeanUtils.copyProperties(student, studentDto);
+            studentDto.setFirstName(student.getName().getFirstName());
+            studentDto.setLastName(student.getName().getLastName());
             studentDtos.add(studentDto);
 		}
 		return studentDtos;
@@ -51,6 +56,8 @@ public class StudentServiceImpl implements StudentService {
 		StudentDTO studentDto = new StudentDTO();
         if (student != null) {
             BeanUtils.copyProperties(student, studentDto);
+            studentDto.setFirstName(student.getName().getFirstName());
+            studentDto.setLastName(student.getName().getLastName());
         }
 		return studentDto; 
 	}
@@ -64,6 +71,8 @@ public class StudentServiceImpl implements StudentService {
 	public void updateStudent(StudentDTO studentDto) {
 		Student updateStudent = studentDao.getStudent(studentDto.getId());
         BeanUtils.copyProperties(studentDto,updateStudent);
+        Name name = new Name(studentDto.getFirstName(), studentDto.getLastName());
+        updateStudent.setName(name);
 		studentDao.updateStudent(updateStudent);
 	}
     
@@ -91,6 +100,8 @@ public class StudentServiceImpl implements StudentService {
         for (Student student:students) {
             StudentDTO studentDto = new StudentDTO();
             BeanUtils.copyProperties(student, studentDto);
+            studentDto.setFirstName(student.getName().getFirstName());
+            studentDto.setLastName(student.getName().getLastName());
             studentDtos.add(studentDto);
         }
         return studentDtos;

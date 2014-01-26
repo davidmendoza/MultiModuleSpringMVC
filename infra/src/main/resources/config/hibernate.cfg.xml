@@ -6,6 +6,7 @@
 <hibernate-configuration>
     <session-factory>
         <mapping class="multiModuleSpringMVC.core.model.Student"/>
+        <mapping class="multiModuleSpringMVC.core.model.Name"/>
         <mapping class="multiModuleSpringMVC.core.model.Subject"/>
         <mapping class="multiModuleSpringMVC.core.model.TransTable"/>
     </session-factory>
