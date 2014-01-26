@@ -1,5 +1,6 @@
 package multiModuleSpringMVC.core.dao;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,12 +25,14 @@ public class StudentDaoImpl implements StudentDao {
 
 	public void addStudent(Student student) {
 		System.out.println("INSIDE ADD STUDENT...");
+        student.setCreateTime(new Date());
 		sessionFactory.getCurrentSession().save(student);
 		SubjectDaoImpl.printStatistics(sessionFactory);
 	}
 	
 	public void updateStudent(Student student) {
 		System.out.println("INSIDE UPDATE STUDENT...");
+        student.setUpdateTime(new Date());
 		sessionFactory.getCurrentSession().update(student);
 		SubjectDaoImpl.printStatistics(sessionFactory);
 	}

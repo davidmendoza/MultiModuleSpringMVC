@@ -41,8 +41,6 @@ public class SubjectDaoImpl implements SubjectDao {
 	public Map<String, Object> getGPA(int id) {
 		System.out.println("INSIDE GET GPA...");
 		Map<String, Object> gpaMap = new HashMap<String, Object>();
-		Integer ave = null;
-		Character gpa = null;
 		Session session = sessionFactory.getCurrentSession();
 		Criteria crit = session.createCriteria(Subject.class)
 				.createAlias("student", "student")
@@ -52,16 +50,16 @@ public class SubjectDaoImpl implements SubjectDao {
 		List<Double> raw = crit.list();
 		
 		if (raw.get(0) != null) {
-		    ave = (int)Math.round((double)raw.get(0));
+		    Integer ave = (int)Math.round((double)raw.get(0));
 		    Criteria gpaCrit = session.createCriteria(TransTable.class)
 			        .setProjection(Projections.property("equivalence"))
 			        .add(Restrictions.and(
 			            Restrictions.ge("upperLimit", ave),
 			            Restrictions.le("lowerLimit", ave)));
-		    gpa = (Character)gpaCrit.list().get(0);
+		    Character gpa = (Character)gpaCrit.list().get(0);
+            gpaMap.put("Average", ave);
+            gpaMap.put("GPA", gpa);
 		}
-		gpaMap.put("Average", ave);
-		gpaMap.put("GPA", gpa);
 		System.out.println("2ND LEVEL CACHE HIT COUNT: "+sessionFactory.getStatistics().getSecondLevelCacheHitCount());
 		return gpaMap;
 	}

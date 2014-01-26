@@ -18,6 +18,7 @@
             <th>Last Name</th>
             <th>Gender</th>
             <th>Year Level</th>
+            <th>Birthday</th>
             <th>Active?</th>
             <th>Action</th>
             <th>Manage Subjects</th>
@@ -29,6 +30,7 @@
             <td>${student.lastName}</td>
             <td>${student.gender}</td>
             <td>${student.level}</td>
+            <td>${student.birthday}</td>
             <td>${student.status}</td>
             <td><a href="${contextPath}/student/edit/${pageMap.currPage}-${student.id}">Update | </a>
             <a href="${contextPath}/student/delete/${pageMap.currPage}-${student.id}">Delete</a></td>

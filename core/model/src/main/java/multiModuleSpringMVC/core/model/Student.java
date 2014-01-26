@@ -8,6 +8,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -38,6 +39,14 @@ public class Student {
     @Temporal(value = TemporalType.DATE)
     @Column(name="BIRTHDAY")
     private Date birthday;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name="CREATE_TIME")
+    private Date createTime;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name="UPDATE_TIME")
+    private Date updateTime;
 
 	public Student() {
 		
@@ -89,5 +98,29 @@ public class Student {
 
     public void setName(Name name) {
         this.name = name;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

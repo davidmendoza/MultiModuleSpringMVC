@@ -38,14 +38,14 @@ public class StudentController {
 	public String addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, Model model) {
 		String view = null;
 		if (result.hasErrors()) {
-			model.addAttribute("message", "Errors encountered. Please fill up the form again.");
+			model.addAttribute("message", "Errors encountered. Please fill up the form again.Please make sure birthday is in the correct format (dd/MM/YYYY)");
 			model.addAttribute("student", student);
 			view = "addStudent";
 		} else {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
 		        model.addAttribute("message", "Added New Student");
-		        view ="home";
+		        view ="homepage";
 			} else {
 				studentService.updateStudent(student);
 				model.addAttribute("message", "Updated Student Details");

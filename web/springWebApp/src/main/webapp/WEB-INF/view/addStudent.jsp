@@ -33,6 +33,7 @@
 	    Status: <input type="radio" name="status" value="true" ${student.status == 'true' ? 'checked' : '' }>Active
 	       	    <input type="radio" name="status" value="false" ${student.status == 'false' ? 'checked' : '' }>Inactive
 	       	    <form:errors path="status"/><br/>
+        Birthday (Day/Month/Year): <input type="text" name="birthday" placeholder="MM/DD/YYYY" maxlength="10"/><br/>
 	       	    <form:hidden path="pageNo" value="${student.pageNo}"/>
 	    <input type="submit" value="Save Student"/>
 	</form:form>

@@ -16,6 +16,7 @@
 	<a href="${contextPath}/student/view?page=0">View Students</a><br/>
     <a href="${contextPath}/student/search">Search Students</a><br/>
 	<a href="${contextPath}/student/passed">View Active Passing Students</a><br/>
+    <a href="${contextPath}/redirectExample">Controller to Controller example</a><br/>
 	<b>${message}</b>
 </body>
 </html>

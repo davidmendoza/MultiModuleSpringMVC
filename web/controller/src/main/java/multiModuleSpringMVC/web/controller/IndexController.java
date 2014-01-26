@@ -16,4 +16,9 @@ public class IndexController {
 	public ModelAndView indexPage() {
 		return new ModelAndView("homepage");
 	}
+
+    @RequestMapping(value="/redirectExample")
+    public ModelAndView redirectToControllerExample() {
+        return new ModelAndView("redirect:/student/search");
+    }
 }

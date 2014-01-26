@@ -1,10 +1,13 @@
 package multiModuleSpringMVC.core.dto;
 
 import multiModuleSpringMVC.core.model.Gender;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 
 public class StudentDTO {
@@ -27,7 +30,9 @@ public class StudentDTO {
 	
 	@NotNull(message="Please enter Student's gender")
 	private Gender gender;
-	
+
+    private Date birthday;
+
 	private int average;
 	
 	private int pageNo;
@@ -100,4 +105,11 @@ public class StudentDTO {
 		this.pageNo = pageNo;
 	}
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 }
