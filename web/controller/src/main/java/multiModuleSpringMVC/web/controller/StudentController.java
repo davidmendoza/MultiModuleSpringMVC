@@ -1,11 +1,8 @@
 package multiModuleSpringMVC.web.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
+import multiModuleSpringMVC.core.dao.StudentDaoImpl;
+import multiModuleSpringMVC.core.dto.StudentDTO;
+import multiModuleSpringMVC.core.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import multiModuleSpringMVC.core.dao.StudentDaoImpl;
-import multiModuleSpringMVC.core.dto.StudentDTO;
-import multiModuleSpringMVC.core.service.StudentService;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value="/student")
@@ -36,11 +34,10 @@ public class StudentController {
 	
 	@RequestMapping(value="/process", method=RequestMethod.POST)
 	public String addOrEditStudent(@Valid @ModelAttribute("student") StudentDTO student, BindingResult result, Model model) {
-		String view = null;
+		String view = "addStudent";
 		if (result.hasErrors()) {
-			model.addAttribute("message", "Errors encountered. Please fill up the form again.Please make sure birthday is in the correct format (dd/MM/YYYY)");
+			model.addAttribute("message", "Errors encountered. Please fill up the form again. Please make sure birthday is in the correct format (dd/MM/YYYY)");
 			model.addAttribute("student", student);
-			view = "addStudent";
 		} else {
 		    if (student.getId() < 1) {
 				studentService.addStudent(student);
@@ -50,10 +47,10 @@ public class StudentController {
 				studentService.updateStudent(student);
 				model.addAttribute("message", "Updated Student Details");
 				view = viewStudents(student.getPageNo(), model);
-			}
+            }
 		}
 		return view;
-	}
+    }
 	
 	@RequestMapping(value="/view", method = RequestMethod.GET)
 	public String viewStudents(@RequestParam(value="page")int page, Model model) {
@@ -89,7 +86,6 @@ public class StudentController {
 		} else {
 		    model.addAttribute("message", "Student does not exist");
 		}
-
 		return viewStudents(page, model);
 	}
 	
@@ -119,7 +115,4 @@ public class StudentController {
         }
         return mav;
     }
-
-
-	
 }

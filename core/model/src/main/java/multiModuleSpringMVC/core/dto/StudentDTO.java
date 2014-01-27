@@ -1,7 +1,6 @@
 package multiModuleSpringMVC.core.dto;
 
 import multiModuleSpringMVC.core.model.Gender;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
