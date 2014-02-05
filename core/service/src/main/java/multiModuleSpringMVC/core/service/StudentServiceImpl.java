@@ -107,6 +107,10 @@ public class StudentServiceImpl implements StudentService {
         return studentDtos;
     }
 
+    public String dwrHelloWorld() {
+        return "Hello World";
+    }
+
 
 	
 }

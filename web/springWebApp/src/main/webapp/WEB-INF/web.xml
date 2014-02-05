@@ -20,12 +20,27 @@
     <servlet-name>spring-mvc</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+      <servlet-name>dwr-invoker</servlet-name>
+      <display-name>DWR Servlet</display-name>
+      <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+      <init-param>
+          <param-name>debug</param-name>
+          <param-value>true</param-value>
+      </init-param>
+  </servlet>
   
+  <servlet-mapping>
+      <servlet-name>dwr-invoker</servlet-name>
+      <url-pattern>/dwr/*</url-pattern>
+  </servlet-mapping>
+    
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/spring-mvc-servlet.xml</param-value>
   </context-param>
-  
+
   <welcome-file-list>
       <welcome-file>homepage.jsp</welcome-file>
   </welcome-file-list>

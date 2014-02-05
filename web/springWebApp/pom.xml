@@ -41,6 +41,10 @@
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>
       </dependency>
+      <dependency>
+          <groupId>org.directwebremoting</groupId>
+          <artifactId>dwr</artifactId>
+      </dependency>
   </dependencies>
   
   <build>

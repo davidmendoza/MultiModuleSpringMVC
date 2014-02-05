@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Student Spring MVC</title>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<script type="text/javascript" src="${request.contextPath}/dwr/interface/StudentServiceImpl.js"/>
+<script type="text/javascript" src="${request.contextPath}/dwr/engine.js"/>
 </head>
 
 <body>
@@ -18,5 +20,14 @@
 	<a href="${contextPath}/student/passed">View Active Passing Students</a><br/>
     <a href="${contextPath}/redirectExample">Controller to Controller example</a><br/>
 	<b>${message}</b>
+
+    <h3>
+        <script type="text/javascript">
+            function handleTest(str) {
+                alert(str);
+            }
+            StudentServiceImpl.dwrHelloWorld(handleTest);
+        </script>
+    </h3>
 </body>
 </html>
