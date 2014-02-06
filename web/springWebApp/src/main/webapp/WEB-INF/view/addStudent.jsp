@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+    <script type="text/javascript" src="${contextPath}/dwr/interface/StudentServiceImpl.js"/>
+    <script type="text/javascript" src="${contextPath}/dwr/engine.js"/>
 <title>Student Spring MVC</title>
 
     <script type="text/javascript">
