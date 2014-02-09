@@ -2,6 +2,7 @@ package multiModuleSpringMVC.core.service;
 
 import multiModuleSpringMVC.core.dao.StudentDao;
 import multiModuleSpringMVC.core.dto.StudentDTO;
+import multiModuleSpringMVC.core.model.Gender;
 import multiModuleSpringMVC.core.model.Name;
 import multiModuleSpringMVC.core.model.Student;
 import org.springframework.beans.BeanUtils;
@@ -107,8 +108,13 @@ public class StudentServiceImpl implements StudentService {
         return studentDtos;
     }
 
-    public String dwrHelloWorld() {
-        return "Hello World";
+    public List<StudentDTO> dwrHelloWorld(String firstName) {
+        List<StudentDTO> list = new ArrayList<>();
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setFirstName(firstName);
+        studentDTO.setLastName("testLastName");
+        list.add(studentDTO);
+        return list;
     }
 
 

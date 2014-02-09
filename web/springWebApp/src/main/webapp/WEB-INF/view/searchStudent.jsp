@@ -15,6 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
     <title>Student Spring MVC</title>
+    <script type="text/javascript" src="${contextPath}/dwr/interface/StudentServiceImpl.js"></script>
+    <script type="text/javascript" src="${contextPath}/dwr/engine.js"></script>
 </head>
 <body>
     <h3>Search Student</h3>
@@ -53,5 +55,16 @@
     <a href="${contextPath}/student/add">Add New Student</a><br/>
     <a href="${contextPath}/student/passed">View Passing Students</a><br/>
     <a href="${contextPath}/home">Back</a><br/>
+
+
+    <input type = "text" id="search"/><br/>
+    <input type="button" onclick="searchList()"/>
+
+    <script type="text/javascript">
+        function searchList() {
+            var nameToSearch = document.getElementById("search").value;
+            StudentServiceImpl.getSearchResults()
+        }
+    </script>
 </body>
 </html>

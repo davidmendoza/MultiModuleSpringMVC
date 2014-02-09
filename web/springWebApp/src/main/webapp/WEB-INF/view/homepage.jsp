@@ -10,6 +10,15 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <script type="text/javascript" src="${contextPath}/dwr/interface/StudentServiceImpl.js"></script>
 <script type="text/javascript" src="${contextPath}/dwr/engine.js"></script>
+
+    <script type="text/javascript">
+        function test() {
+            var x = document.getElementById("name").value;
+            StudentServiceImpl.dwrHelloWorld(x, function handleTest(str) {
+                alert(str[0].firstName);
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -21,12 +30,12 @@
     <a href="${contextPath}/redirectExample">Controller to Controller example</a><br/>
 	<b>${message}</b><br/>
 
-    <script type="text/javascript">
-        function handleTest(str) {
-            alert(str);
-        }
-        StudentServiceImpl.dwrHelloWorld(handleTest);
-    </script>
+
+    Enter name: <input type="text" id="name"/>
+                <input type="button" onclick="test()" value="press me"/>
+
+
+
 
 </body>
 </html>
