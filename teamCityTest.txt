@@ -1,21 +1,5 @@
+hello world!
 
-
-
-
-
-
-
-hello worlds
-:q
-:q
-q:
-:q!
-exit
-0
-
-:w
-:w!
-:q
 
 
 
